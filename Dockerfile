@@ -12,6 +12,7 @@ RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc \
     --auto-agree-with-licenses --no-recommends \
  && zypper --non-interactive --quiet install \
     --auto-agree-with-licenses --no-recommends \
+        azure-cli \
         b3sum \
         coreutils-doc \
         curl \
