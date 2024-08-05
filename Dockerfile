@@ -7,16 +7,25 @@ RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc \
  && zypper addrepo \
     --check --refresh --gpgcheck-strict \
         'https://packages.microsoft.com/sles/15/prod/' packages-microsoft-com-prod \
+ && sed -i 's/rpm.install.excludedocs = yes/rpm.install.excludedocs = no/' /etc/zypp/zypp.conf \
  && zypper --non-interactive --quiet update \
     --auto-agree-with-licenses --no-recommends \
  && zypper --non-interactive --quiet install \
     --auto-agree-with-licenses --no-recommends \
         b3sum \
+        coreutils-doc \
         curl \
+        diffutils \
         dotnet-sdk-8.0 \
         dust \
         fd \
+        fdupes \
         git \
+        lldb \
+        man \
+        man-pages \
+        man-pages-posix \
+        patch \
         ripgrep \
         tree \
         vim \
@@ -26,7 +35,9 @@ RUN rpm --import https://packages.microsoft.com/keys/microsoft.asc \
 # Install .NET tools
 ENV DOTNET_CLI_TELEMETRY_OPTOUT=1
 RUN dotnet tool install --global paket \
- && dotnet tool install --global fantomas
+ && dotnet tool install --global fantomas \
+ && dotnet tool install --global dotnet-dump \
+ && dotnet tool install --global dotnet-sos
 
 # Install Pulumi
 # Similar to `curl -fsSL https://get.pulumi.com | sh` but with checksum verification
